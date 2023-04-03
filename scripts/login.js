@@ -10,7 +10,17 @@ window.addEventListener('load', function () {
     form.addEventListener('submit', function (event) {
 
         event.preventDefault();
-        if(validarEmail(email.value) && validarContrasenia(pass.value)){
+        let errores = [];
+
+        if(!validarEmail(email.value)){
+            errores.push("El email tiene un formato incorrecto");
+            email.classList.add("error");
+        }
+        if(!validarContrasenia(pass.value)){
+            errores.push("La contraseña debe ser mayor a 5 caracteres y no debe contener espacios en blanco");
+            pass.classList.add("error");
+        }
+        if(errores.length <= 0){
             const user = {
                 email: email.value,
                 password: pass.value
@@ -26,9 +36,40 @@ window.addEventListener('load', function () {
 
             realizarLogin(setting);
         }
-
+        else{
+            let lista = "";
+            errores.forEach(element => {
+                lista+='<li>'+element+'</li>'
+            });
+            Swal.fire({
+                title: '<strong>Error!</strong>',
+                icon: 'error',
+                html:
+                  `<ul>${lista}</ul>`,
+                focusConfirm: false,
+                confirmButtonText: 'Cerrar'
+              })
+        }
 
     });
+
+    email.addEventListener('blur', () =>{
+        if(!validarEmail(email.value)){
+            email.classList.add("error");
+        }
+        else{
+            email.classList.remove("error");
+        }
+    })
+
+    pass.addEventListener('blur', () =>{
+        if(!validarContrasenia(pass.value)){
+            pass.classList.add("error");
+        }
+        else{
+            pass.classList.remove("error");
+        }
+    })
 
 
     /* -------------------------------------------------------------------------- */
@@ -41,13 +82,37 @@ window.addEventListener('load', function () {
                 if(!resp.ok){
                     switch (resp.status) {
                         case 400: 
-                            alert("Contraseña incorrecta");
+                            // alert("Contraseña incorrecta");
+                            Swal.fire({
+                                title: '<strong>Error</strong>',
+                                icon: 'error',
+                                html:
+                                `Contraseña incorrecta`,
+                                focusConfirm: false,
+                                confirmButtonText: 'Cerrar'
+                            })
                             break;
                         case 404: 
-                            alert("El usuario no existe");
+                            // alert("El usuario no existe");
+                            Swal.fire({
+                                title: '<strong>Error</strong>',
+                                icon: 'error',
+                                html:
+                                `El usuario no existe`,
+                                focusConfirm: false,
+                                confirmButtonText: 'Cerrar'
+                            })
                             break;
                         case 500: 
-                            alert("Error del servidor");
+                            // alert("Error del servidor");
+                            Swal.fire({
+                                title: '<strong>Error</strong>',
+                                icon: 'error',
+                                html:
+                                `Error del servidor`,
+                                focusConfirm: false,
+                                confirmButtonText: 'Cerrar'
+                            })
                             break;                      
                         default:
                             break;
@@ -63,7 +128,15 @@ window.addEventListener('load', function () {
                 }
             })
             .catch(function(e){
-                console.log(e.message);
+                // console.log(e.message);
+                Swal.fire({
+                    title: '<strong>Error</strong>',
+                    icon: 'error',
+                    html:
+                    e.message,
+                    focusConfirm: false,
+                    confirmButtonText: 'Cerrar'
+                })
             })
 
         

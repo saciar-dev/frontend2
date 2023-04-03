@@ -1,10 +1,11 @@
 /* ---------------------------------- texto --------------------------------- */
 function validarTexto(texto) {
-    
+  let regex = /^[a-zA-Z]+$/;
+  return regex.test(texto);
 }
 
 function normalizarTexto(texto) {
-    
+  return texto.normalize();
 }
 
 /* ---------------------------------- email --------------------------------- */
@@ -25,7 +26,7 @@ function normalizarEmail(email) {
 
 /* -------------------------------- password -------------------------------- */
 function validarContrasenia(contrasenia) {
-    if (contrasenia.length <= 5 || contrasenia === "") {
+    if (contrasenia.length < 5 || contrasenia === "") {
         console.log("error de password");
         return false;
       }

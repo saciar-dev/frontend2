@@ -7,7 +7,8 @@
 window.addEventListener('load', function () {
 
   /* ---------------- variables globales y llamado a funciones ---------------- */
-  
+  const btnCerrarSesion  = document.getElementById("closeApp");   
+  const formCrearTarea = document.querySelector("form");
 
 
   /* -------------------------------------------------------------------------- */
@@ -15,10 +16,21 @@ window.addEventListener('load', function () {
   /* -------------------------------------------------------------------------- */
 
   btnCerrarSesion.addEventListener('click', function () {
-   
-
-
-
+    if (localStorage.getItem("jwt") != null) {
+      Swal.fire({
+        title: '¿Esta seguro de cerrar sesión?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("jwt");
+          location.replace("./index.html");
+        }
+      })
+    }
   });
 
   /* -------------------------------------------------------------------------- */

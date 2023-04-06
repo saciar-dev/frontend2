@@ -205,7 +205,8 @@ main h2 {
 }
 
 .tareas-terminadas .tarea .cambios-estados button:hover {
-    color: var(--negro);
+    /* color: var(--negro); */
+    background-color: var(--azul-hover);
 }
 
 .tareas-terminadas .tarea .cambios-estados button:active {

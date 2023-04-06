@@ -20,6 +20,7 @@ window.addEventListener('load', function () {
             errores.push("La contraseña debe ser mayor a 5 caracteres y no debe contener espacios en blanco");
             pass.classList.add("error");
         }
+        //si no hay errores de formato preparo la peticion POST
         if(errores.length <= 0){
             const user = {
                 email: email.value,
@@ -82,7 +83,6 @@ window.addEventListener('load', function () {
                 if(!resp.ok){
                     switch (resp.status) {
                         case 400: 
-                            // alert("Contraseña incorrecta");
                             Swal.fire({
                                 title: '<strong>Error</strong>',
                                 icon: 'error',
@@ -93,7 +93,6 @@ window.addEventListener('load', function () {
                             })
                             break;
                         case 404: 
-                            // alert("El usuario no existe");
                             Swal.fire({
                                 title: '<strong>Error</strong>',
                                 icon: 'error',
@@ -104,7 +103,6 @@ window.addEventListener('load', function () {
                             })
                             break;
                         case 500: 
-                            // alert("Error del servidor");
                             Swal.fire({
                                 title: '<strong>Error</strong>',
                                 icon: 'error',
@@ -121,14 +119,12 @@ window.addEventListener('load', function () {
                 return resp.json();
             })
             .then( function(data){
-                console.log(data);
                 if(data.jwt){
                     localStorage.setItem("jwt", data.jwt);
                     location.replace("./mis-tareas.html");
                 }
             })
             .catch(function(e){
-                // console.log(e.message);
                 Swal.fire({
                     title: '<strong>Error</strong>',
                     icon: 'error',

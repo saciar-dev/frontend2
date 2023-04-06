@@ -54,7 +54,6 @@ window.addEventListener('load', function () {
             realizarRegister(settings);
         }
         else{
-            // alert(errores);
             let lista = "";
             errores.forEach(element => {
                 lista+='<li>'+element+'</li>'
@@ -123,8 +122,7 @@ window.addEventListener('load', function () {
         .then(function(resp){
             if(!resp.ok){
                 switch (resp.status) {
-                    case 400: {
-                    //  alert("El usuario ya se encuentra registrado / Alguno de los datos requeridos está incompleto");
+                    case 400: {                    
                         Swal.fire({
                             title: '<strong>Error</strong>',
                             icon: 'error',
@@ -152,14 +150,12 @@ window.addEventListener('load', function () {
             return resp.json();
         })
         .then(function(data){
-            console.log(data);
             if(data.jwt){
                 localStorage.setItem("jwt", data.jwt);
                 location.replace("./index.html");
             }
         })
         .catch(function(e){
-            // console.log(e);
             Swal.fire({
                 title: '<strong>Error</strong>',
                 icon: 'error',
